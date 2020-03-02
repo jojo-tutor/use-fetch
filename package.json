@@ -5,10 +5,15 @@
   "keywords": [
     "react",
     "react hook",
-    "fetch"
+    "react fetch",
+    "react fetch hook",
+    "fetch",
+    "fetch API",
+    "use fetch",
+    "rest",
+    "rest API"
   ],
   "author": "Josaphat E. Tutor <jeshrave003@gmail.com> (https://jojotutor.netlify.com/)",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/jojo-tutor/use-fetch.git"
@@ -17,7 +22,6 @@
   "bugs": {
     "url": "https://gitlab.com/jojo-tutor/use-fetch/issues"
   },
-  "homepage": "https://gitlab.com/jojo-tutor/use-fetch#readme",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
