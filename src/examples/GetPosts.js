@@ -1,17 +1,21 @@
-import React from 'react';
-import useFetch from '../package/useFetch';
+import React from "react";
+import useFetch from "../package/useFetch";
 
 function GetPosts() {
-  const [{ data, loading, error }] = useFetch('https://jsonplaceholder.typicode.com/posts?_limit=10')
+  const [{ data, loading, error }] = useFetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=10"
+  );
 
   return (
     <div className="GetPosts">
       <h1>Get Posts</h1>
-      {loading && 'Loading...'}
+      {loading && "Loading..."}
       {error && error.message}
       {data && (
         <ol>
-          {data.map(item => (<li key={item.id}>{item.title}</li>))}
+          {data.map(item => (
+            <li key={item.id}>{item.title}</li>
+          ))}
         </ol>
       )}
     </div>
