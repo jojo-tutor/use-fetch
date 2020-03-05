@@ -7,7 +7,8 @@ function UpdatePostError() {
   const [{ data: details }] = useFetch(URL);
   const [{ loading, error }, fetchPosts] = useFetch(URL, {
     lazy: true,
-    method: "PUT"
+    method: "PUT",
+    onError: handleError
   });
   const [formValues, setFormValues] = useState({
     title: "",
@@ -72,6 +73,10 @@ function UpdatePostError() {
       {error && error.message}
     </div>
   );
+
+  function handleError(err) {
+    console.error(err);
+  }
 }
 
 export default UpdatePostError;
