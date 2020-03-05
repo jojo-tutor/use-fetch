@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../package/useFetch";
 
-const URL = "https://jsonplaceholder.typicode.com/posts/1";
+const URL = "https://jsonplaceholder.typicode.com/posts";
 
 function UpdatePostError() {
-  const [{ data: details }] = useFetch(URL);
+  const [{ data: details }] = useFetch(`${URL}/1`);
   const [{ loading, error }, fetchPosts] = useFetch(URL, {
     lazy: true,
     method: "PUT",
