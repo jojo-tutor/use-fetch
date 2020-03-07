@@ -5,27 +5,9 @@ const defaultOptions = {
   lazy: false
 };
 
-/**
- * @typedef {Object} Response
- * @property {any} data
- * @property {Boolean} loading
- */
-
-/**
- *
- * @param {String} url
- * @param {Object} options
- * @param {Boolean} options.lazy
- * @param {any} options.instance - fetch instance
- * @param {Function} options.onSuccess
- * @param {Function} options.onError
- *
- * @returns {Response}
- */
 function useFetch(url, options = defaultOptions) {
   const { lazy, instance, onSuccess, onError, ...initialOptions } = options;
 
-  /** @type {any} */
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
