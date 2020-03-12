@@ -1,20 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { makeCancelable, makeOptions } from "./utils";
-
-interface FetchResult {
-  data: any;
-  loading: boolean;
-  status: number | null;
-  error: any;
-}
-
-interface Options {
-  lazy: boolean;
-  instance?: any;
-  onSuccess?: Function;
-  onError?: Function;
-  method?: "GET" | "PUT" | "POST" | "DELETE";
-}
+import { Options, FetchResult } from "./types";
 
 const defaultOptions = {
   lazy: false

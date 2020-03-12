@@ -1,4 +1,6 @@
-export function makeOptions(initialOptions, overrideOptions) {
+import { Options } from "./types";
+
+export function makeOptions(initialOptions: Options, overrideOptions: Options) {
   const mergedOptions = {
     ...initialOptions,
     ...overrideOptions
@@ -11,16 +13,16 @@ export function makeOptions(initialOptions, overrideOptions) {
   };
 }
 
-export function makeCancelable(promise) {
+export function makeCancelable(promise: any) {
   let hasCanceled = false;
 
-  const wrappedPromise = (...args) =>
+  const wrappedPromise = (...args: any) =>
     new Promise((resolve, reject) => {
       promise(...args)
-        .then(val =>
+        .then((val: any) =>
           hasCanceled ? reject({ isCanceled: true }) : resolve(val)
         )
-        .catch(error =>
+        .catch((error: any) =>
           hasCanceled ? reject({ isCanceled: true }) : reject(error)
         );
     });
