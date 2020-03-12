@@ -1,21 +1,38 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { makeCancelable, makeOptions } from "./utils";
 
+interface FetchResult {
+  data: any;
+  loading: boolean;
+  status: number | null;
+  error: any;
+}
+
+interface Options {
+  lazy: boolean;
+  instance?: any;
+  onSuccess?: Function;
+  onError?: Function;
+}
+
 const defaultOptions = {
   lazy: false
 };
 
-function useFetch(url, options = defaultOptions) {
+function useFetch(
+  url: string,
+  options: Options = defaultOptions
+): [FetchResult, Function] {
   const { lazy, instance, onSuccess, onError, ...initialOptions } = options;
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
+  const [status, setStatus] = useState<number | null>(null);
   const fetchInstance = instance || fetch;
   const request = useRef(makeCancelable(fetchInstance));
 
-  const handleLoading = loading => {
+  const handleLoading = (loading: boolean) => {
     if (request.current.isCanceled()) return;
     setLoading(loading);
   };
@@ -38,13 +55,13 @@ function useFetch(url, options = defaultOptions) {
     [onError]
   );
 
-  const handleStatus = status => {
+  const handleStatus = (status: number | null) => {
     if (request.current.isCanceled()) return;
     setStatus(status);
   };
 
   const fetchData = useCallback(
-    async overrideOptions => {
+    async (overrideOptions?: any) => {
       handleLoading(true);
 
       try {
