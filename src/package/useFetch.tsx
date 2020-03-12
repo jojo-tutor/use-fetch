@@ -13,6 +13,7 @@ interface Options {
   instance?: any;
   onSuccess?: Function;
   onError?: Function;
+  method?: "GET" | "PUT" | "POST" | "DELETE";
 }
 
 const defaultOptions = {
@@ -65,7 +66,7 @@ function useFetch(
       handleLoading(true);
 
       try {
-        const res = await request.current.getPromise(
+        const res: any = await request.current.getPromise(
           url,
           makeOptions(initialOptions, overrideOptions)
         );

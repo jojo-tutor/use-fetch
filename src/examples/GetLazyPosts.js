@@ -2,12 +2,12 @@ import React from "react";
 import useFetch from "../package/useFetch";
 
 function GetLazyPosts() {
-  const [
-    { data, loading, error },
-    fetchPosts
-  ] = useFetch("https://jsonplaceholder.typicode.com/posts?_limit=10", {
-    lazy: true
-  });
+  const [{ data, loading, error }, fetchPosts] = useFetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=10",
+    {
+      lazy: true
+    }
+  );
 
   return (
     <div className="GetLazyPosts">
