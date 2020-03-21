@@ -2,22 +2,9 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { makeCancelable, makeOptions } from "./utils";
 import { FetchOptions, FetchResult, FetchResponse } from "./types";
 
-const defaultOptions = {
-  lazy: false
-};
-
-interface Current {
-  isCanceled: Function
-  getPromise(): Promise<FetchResponse>
-}
-
-interface RequestRef {
-  current: Current
-}
-
 function useFetch(
   url: string,
-  options: FetchOptions = defaultOptions
+  options: FetchOptions = { lazy: false }
 ): [FetchResult, Function] {
   const { lazy, instance = fetch, onSuccess, onError, ...initialOptions } = options;
 
