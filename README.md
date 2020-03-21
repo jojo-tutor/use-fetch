@@ -4,7 +4,7 @@ A lightweight react hook that uses fetch API.
 ## Installation
 Using NPM:
 ```shell
-$ npm install @jtutor/use-fetch
+$ npm i @jtutor/use-fetch
 ```
 
 Using Yarn:

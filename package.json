@@ -1,6 +1,6 @@
 {
   "name": "@jtutor/use-fetch",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "lib/index.js",
   "description": "A lightweight react hook that uses fetch API.",
   "keywords": [
@@ -17,11 +17,11 @@
   "author": "Josaphat E. Tutor <jeshrave003@gmail.com> (https://jojotutor.netlify.com/)",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/jojo-tutor/use-fetch.git"
+    "url": "https://github.com/jojo-tutor/use-fetch"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/jojo-tutor/use-fetch/issues"
+    "url": "https://github.com/jojo-tutor/use-fetch/issues"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
