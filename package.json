@@ -19,7 +19,7 @@
     "type": "git",
     "url": "git+ssh://git@gitlab.com/jojo-tutor/use-fetch.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://gitlab.com/jojo-tutor/use-fetch/issues"
   },
