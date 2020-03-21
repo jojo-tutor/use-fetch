@@ -47,17 +47,17 @@ function useFetch(
       handleLoading(true);
 
       try {
-        const res: FetchResponse = await request.current.getPromise(
+        const response: FetchResponse = await request.current.getPromise(
           url,
           makeOptions(initialOptions, overrideOptions)
         )
-        const json = await res.json();
-        if (res.ok) {
+        const json = await response.json();
+        if (response.ok) {
           handleSuccess(json);
         } else {
           handleError(json);
         }
-        handleStatus(res.status);
+        handleStatus(response.status);
       } catch (err) {
         handleError(err);
       }
