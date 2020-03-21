@@ -1,6 +1,6 @@
-import { Options } from "./types";
+import { FetchOptions, FetchResponse } from "./types";
 
-export function makeOptions(initialOptions: Options, overrideOptions: Options) {
+export function makeOptions(initialOptions: FetchOptions, overrideOptions: FetchOptions) {
   const mergedOptions = {
     ...initialOptions,
     ...overrideOptions
@@ -16,7 +16,7 @@ export function makeOptions(initialOptions: Options, overrideOptions: Options) {
 export function makeCancelable(promise: any) {
   let hasCanceled = false;
 
-  const wrappedPromise = (...args: any) =>
+  const wrappedPromise = (...args: any): Promise<FetchResponse> =>
     new Promise((resolve, reject) => {
       promise(...args)
         .then((val: any) =>

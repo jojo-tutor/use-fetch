@@ -1,25 +1,33 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { makeCancelable, makeOptions } from "./utils";
-import { FetchOptions, FetchResult } from "./types";
+import { FetchOptions, FetchResult, FetchResponse } from "./types";
 
 const defaultOptions = {
   lazy: false
 };
 
+interface Current {
+  isCanceled: Function
+  getPromise(): Promise<FetchResponse>
+}
+
+interface RequestRef {
+  current: Current
+}
+
 function useFetch(
   url: string,
   options: FetchOptions = defaultOptions
 ): [FetchResult, Function] {
-  const { lazy, instance, onSuccess, onError, ...initialOptions } = options;
+  const { lazy, instance = fetch, onSuccess, onError, ...initialOptions } = options;
 
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
   const [status, setStatus] = useState<number | null>(null);
-  const fetchInstance = instance || fetch;
-  const request = useRef(makeCancelable(fetchInstance));
+  const request = useRef(makeCancelable(instance));
 
-  const handleLoading = (loading: boolean) => {
+  const handleLoading = async (loading: boolean) => {
     if (request.current.isCanceled()) return;
     setLoading(loading);
   };
@@ -52,10 +60,10 @@ function useFetch(
       handleLoading(true);
 
       try {
-        const res: any = await request.current.getPromise(
+        const res: FetchResponse = await request.current.getPromise(
           url,
           makeOptions(initialOptions, overrideOptions)
-        );
+        )
         const json = await res.json();
         if (res.ok) {
           handleSuccess(json);

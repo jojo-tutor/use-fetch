@@ -21,7 +21,7 @@ export interface FetchOptions {
   integrity?: any;
 }
 
-declare enum ResponseType {
+export declare enum ResponseType {
   Basic,
   Cors,
   Default,
@@ -29,7 +29,7 @@ declare enum ResponseType {
   Opaque
 }
 
-interface Headers {
+export interface Headers {
   append(name: string, value: string):void;
   delete(name: string):void;
   get(name: string): string;
@@ -38,7 +38,7 @@ interface Headers {
   set(name: string, value: string): void;
 }
 
-interface Body {
+export interface Body {
   bodyUsed: boolean;
   arrayBuffer(): Promise<ArrayBuffer>;
   blob(): Promise<Blob>;
@@ -47,14 +47,14 @@ interface Body {
   text(): Promise<string>;
 }
 
-interface Response extends Body {
-  error(): Response;
-  redirect(url: string, status?: number): Response;
+export interface FetchResponse extends Body {
+  error(): FetchResponse;
+  redirect(url: string, status?: number): FetchResponse;
   type: ResponseType;
   url: string;
   status: number;
   ok: boolean;
   statusText: string;
   headers: Headers;
-  clone(): Response;
+  clone(): FetchResponse;
 }
