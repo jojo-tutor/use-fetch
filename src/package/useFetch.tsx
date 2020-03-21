@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { makeCancelable, makeOptions } from "./utils";
-import { Options, FetchResult } from "./types";
+import { FetchOptions, FetchResult } from "./types";
 
 const defaultOptions = {
   lazy: false
@@ -8,7 +8,7 @@ const defaultOptions = {
 
 function useFetch(
   url: string,
-  options: Options = defaultOptions
+  options: FetchOptions = defaultOptions
 ): [FetchResult, Function] {
   const { lazy, instance, onSuccess, onError, ...initialOptions } = options;
 
