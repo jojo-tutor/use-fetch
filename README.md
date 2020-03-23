@@ -14,8 +14,13 @@ Using Yarn:
 $ yarn add @jtutor/use-fetch
 ```
 
+## Usage
+Todo: Add usage doc
+
 ## Examples
-https://use-fetch.netlify.com/
+Live:
+> https://use-fetch.netlify.com/
+
 
 ## Authors
 **Jojo E. Tutor**
