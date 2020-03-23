@@ -17,6 +17,9 @@ $ yarn add @jtutor/use-fetch
 ## Usage
 Todo: Add usage doc
 
+## Run on local
+Todo: Add steps to run on local
+
 ## Examples
 Live:
 > https://use-fetch.netlify.com/
