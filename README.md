@@ -1,5 +1,7 @@
 # @jtutor/use-fetch
-A lightweight react hook that uses fetch API.
+A lightweight react hook that uses fetch API. No additional module dependecies needed!
+
+![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)
 
 ## Installation
 Using NPM:
