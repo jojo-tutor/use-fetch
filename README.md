@@ -14,6 +14,9 @@ Using Yarn:
 $ yarn add @jtutor/use-fetch
 ```
 
+## Examples
+https://use-fetch.netlify.com/
+
 ## Authors
 **Jojo E. Tutor**
 
