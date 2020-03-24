@@ -9,9 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Use Node.js
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
+
+      - name: Install yarn global
+      - run: npm install -g yarn
+
+      - name: yarn install, build, and test
+      - run: yarn ci
+      - run: yarn test
+      - run: yarn run build
