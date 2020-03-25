@@ -42,7 +42,7 @@
     "build-lib": "tsc --p tsconfig-lib.json",
     "build-app": "react-scripts build",
     "build": "yarn build-lib && yarn build-app",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "yarn build",
     "deploy": "npm publish --access public"
