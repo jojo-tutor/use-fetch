@@ -7,13 +7,22 @@ on:
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, test and build
       - run: npm install -g yarn
       - run: |
+          echo Install yarn
           yarn install
+          echo Run tests
           yarn test
-          yarn run build
+          echo Build app
+          yarn build
