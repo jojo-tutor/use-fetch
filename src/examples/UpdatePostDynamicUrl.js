@@ -1,49 +1,57 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../package/useFetch";
 
-const URL = "https://jsonplaceholder.typicode.com/posts/1";
-const postIds = new Array(5).fill(true).map((value, index) => index + 1)
+const BASE_URL = "https://jsonplaceholder.typicode.com/posts/";
+const getPostUrlById = (id) => `${BASE_URL}/${id}`;
+const postIds = new Array(10).fill(true).map((val, index) => index + 1);
 
 function UpdatePost() {
-  const [{ data: details }, fetchDetails] = useFetch(URL, { lazy: true });
-  const [{ loading, error }, fetchPosts] = useFetch(URL, {
+  const [{ data: details }, fetchDetails] = useFetch(BASE_URL, { lazy: true });
+  const [{ loading, error }, fetchUpdatePost] = useFetch(BASE_URL, {
     lazy: true,
-    method: "PUT"
+    method: "PUT",
   });
   const [formValues, setFormValues] = useState({
-    id: 1,
+    id: "1",
     title: "",
-    body: ""
+    body: "",
   });
 
   useEffect(() => {
     if (formValues.id) {
-      fetchDetails()
+      fetchDetails({
+        url: getPostUrlById(formValues.id),
+      });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formValues.id]);
+  }, [fetchDetails, formValues.id]);
 
   useEffect(() => {
     if (details) {
-      setFormValues({
+      setFormValues((prev) => ({
+        ...prev,
         title: details.title,
-        body: details.body
-      });
+        body: details.body,
+      }));
     }
   }, [details]);
 
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    fetchPosts({
-      body: formValues
+    const values = {
+      title: formValues.title,
+      body: formValues.body,
+    };
+    fetchUpdatePost({
+      url: getPostUrlById(formValues.id),
+      body: values,
     });
   };
 
-  const handleInputChange = evt => {
+  const handleInputChange = (evt) => {
     const { name, value } = evt.target;
-    setFormValues(prevValues => ({
+    setFormValues((prevValues) => ({
       ...prevValues,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -54,7 +62,11 @@ function UpdatePost() {
       <form onSubmit={handleSubmit}>
         <label htmlFor="id">ID</label>
         <select name="id" value={formValues.id} onChange={handleInputChange}>
-          {postIds.map(id => <option key={id} value={id}>{id}</option>)}
+          {postIds.map((id) => (
+            <option key={id} value={id}>
+              {id}
+            </option>
+          ))}
         </select>
 
         <label htmlFor="title">Title</label>
