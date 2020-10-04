@@ -41,7 +41,7 @@ function UpdatePostError() {
 
   return (
     <div className="UpdatePostError">
-      <h1>Update Post</h1>
+      <h1>Update Post with Error callback</h1>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
@@ -76,6 +76,11 @@ function UpdatePostError() {
 
   function handleError(err) {
     console.error(err);
+    const message = {
+      title: "API Error!",
+      ...err
+    }
+    alert(JSON.stringify(message))
   }
 }
 
