@@ -2,6 +2,7 @@ import React from "react";
 import GetPosts from "./examples/GetPosts";
 import GetLazyPosts from "./examples/GetLazyPosts";
 import UpdatePost from "./examples/UpdatePost";
+import UpdatePostSuccess from './examples/UpdatePostSuccess'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <GetPosts />
       <GetLazyPosts />
       <UpdatePost />
+      <UpdatePostSuccess />
     </div>
   );
 }
