@@ -1,74 +1,87 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import { makeCancelable, makeOptions } from "./utils";
-import { FetchOptions, FetchResult, FetchResponse } from "./types";
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { makeCancelable, makeOptions } from './utils';
+import {
+  IResponse,
+  IFetchOptions,
+  IFetchResult,
+  IFetchResponse,
+} from './types';
 
+type CallbackFunction = (options?: IFetchOptions) => void;
+
+// for now only support json, will need to refactor later for other content types
 function useFetch(
   url: string,
-  options: FetchOptions = { lazy: false }
-): [FetchResult, Function] {
-  const { lazy, instance = fetch, onSuccess, onError, ...initialOptions } = options;
+  options: IFetchOptions = { lazy: false },
+): [IFetchResult, CallbackFunction] {
+  const optionRef = useRef(options);
+  const [response, setResponse] = useState<IResponse>({
+    data: null,
+    error: null,
+    loading: !optionRef.current.lazy,
+  });
 
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
-  const [status, setStatus] = useState<number | null>(null);
+  const { instance = fetch, ...initialOptions } = optionRef.current;
+
   const request = useRef(makeCancelable(instance));
 
-  const handleLoading = async (loading: boolean) => {
+  const handleSuccess = (json: any) => {
     if (request.current.isCanceled()) return;
-    setLoading(loading);
+    if (optionRef.current.onSuccess) optionRef.current.onSuccess(json);
   };
 
-  const handleSuccess = useCallback(
-    json => {
-      if (request.current.isCanceled()) return;
-      setData(json);
-      if (onSuccess) onSuccess(json);
-    },
-    [onSuccess]
-  );
-
-  const handleError = useCallback(
-    err => {
-      if (request.current.isCanceled()) return;
-      setError(err);
-      if (onError) onError(err);
-    },
-    [onError]
-  );
-
-  const handleStatus = (status: number | null) => {
+  const handleError = (err: any) => {
     if (request.current.isCanceled()) return;
-    setStatus(status);
+    if (optionRef.current.onError) optionRef.current.onError(err);
   };
-
-  const fetchData = useCallback(
-    async (overrideOptions?: any) => {
-      handleLoading(true);
-
-      try {
-        const response: FetchResponse = await request.current.getPromise(
-          url,
-          makeOptions(initialOptions, overrideOptions)
-        )
-        const json = await response.json();
-        if (response.ok) {
-          handleSuccess(json);
-        } else {
-          handleError(json);
-        }
-        handleStatus(response.status);
-      } catch (err) {
-        handleError(err);
-      }
-
-      handleLoading(false);
-    },
-    [handleError, handleSuccess, initialOptions, url]
-  );
 
   useEffect(() => {
-    if (!lazy) {
+    if (response.loading) return;
+    if (response.data) {
+      handleSuccess(response.data);
+    } else if (response.error) {
+      handleError(response.error);
+    }
+  }, [response]);
+
+  const fetchData: CallbackFunction = useCallback(async (
+    overrideOptions?: IFetchOptions,
+  ) => {
+    const newOptions = makeOptions(initialOptions, overrideOptions);
+    optionRef.current = newOptions;
+    setResponse((prev) => ({ ...prev, loading: true }));
+
+    try {
+      const response: IFetchResponse = await request.current.getPromise(
+        newOptions.url || url,
+        newOptions,
+      );
+      let json = await response.json();
+      if (response.ok) {
+        setResponse({
+          data: json,
+          error: null,
+          loading: false,
+        });
+      } else {
+        setResponse({
+          data: null,
+          error: json,
+          loading: false,
+        });
+      }
+    } catch (err) {
+      setResponse({
+        data: null,
+        error: err,
+        loading: false,
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!optionRef.current.lazy) {
       fetchData();
     }
 
@@ -77,10 +90,9 @@ function useFetch(
     return () => {
       current.cancel();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchData]);
 
-  return [{ data, loading, status, error }, fetchData];
+  return [response, fetchData];
 }
 
 export default useFetch;

@@ -1,39 +1,51 @@
-import { FetchOptions, FetchResponse } from "./types";
+import { IFetchOptions, IFetchResponse, ICalcelablePromise } from './types'
 
-export function makeOptions(initialOptions: FetchOptions, overrideOptions: FetchOptions) {
+function formatOptions({ body, headers }: IFetchOptions) {
+  return {
+    body: body ? JSON.stringify(body) : undefined,
+    headers: { 'Content-Type': 'application/json', ...headers },
+  }
+}
+
+const defaultOptions = {
+  responseToCamelCase: true
+}
+
+export function makeOptions(
+  initialOptions: IFetchOptions,
+  overrideOptions?: IFetchOptions,
+): IFetchOptions {
   const mergedOptions = {
+    ...defaultOptions,
     ...initialOptions,
-    ...overrideOptions
-  };
-  const { body } = mergedOptions;
+    ...overrideOptions,
+  }
 
   return {
     ...mergedOptions,
-    body: body ? JSON.stringify(body) : body
-  };
+    ...formatOptions(mergedOptions),
+  }
 }
 
-export function makeCancelable(promise: any) {
-  let hasCanceled = false;
+export function makeCancelable(promise: any): ICalcelablePromise {
+  let hasCanceled = false
 
-  const wrappedPromise = (...args: any): Promise<FetchResponse> =>
+  const wrappedPromise = (...args: any): Promise<IFetchResponse> =>
     new Promise((resolve, reject) => {
       promise(...args)
         .then((val: any) =>
-          hasCanceled ? reject({ isCanceled: true }) : resolve(val)
-        )
+          hasCanceled ? reject({ isCanceled: true }) : resolve(val))
         .catch((error: any) =>
-          hasCanceled ? reject({ isCanceled: true }) : reject(error)
-        );
-    });
+          hasCanceled ? reject({ isCanceled: true }) : reject(error))
+    })
 
   return {
     getPromise: wrappedPromise,
     cancel() {
-      hasCanceled = true;
+      hasCanceled = true
     },
     isCanceled() {
-      return hasCanceled;
-    }
-  };
+      return hasCanceled
+    },
+  }
 }
