@@ -2,8 +2,8 @@ import React from "react";
 import GetPosts from "./examples/GetPosts";
 import GetLazyPosts from "./examples/GetLazyPosts";
 import UpdatePost from "./examples/UpdatePost";
-import UpdatePostError from "./examples/UpdatePostError";
 import UpdatePostSuccess from "./examples/UpdatePostSuccess";
+import UpdatePostError from "./examples/UpdatePostError";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
       <UpdatePost />
       <UpdatePostError />
       <UpdatePostSuccess />
+      <UpdatePostError />
     </div>
   );
 }
