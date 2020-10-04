@@ -8,40 +8,40 @@ function UpdatePostError() {
   const [{ loading, error }, fetchPosts] = useFetch(URL, {
     lazy: true,
     method: "PUT",
-    onError: handleError
+    onError: handleError,
   });
   const [formValues, setFormValues] = useState({
     title: "",
-    body: ""
+    body: "",
   });
 
   useEffect(() => {
     if (details) {
       setFormValues({
         title: details.title,
-        body: details.body
+        body: details.body,
       });
     }
   }, [details]);
 
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     fetchPosts({
-      body: formValues
+      body: formValues,
     });
   };
 
-  const handleInputChange = evt => {
+  const handleInputChange = (evt) => {
     const { name, value } = evt.target;
-    setFormValues(prevValues => ({
+    setFormValues((prevValues) => ({
       ...prevValues,
-      [name]: value
+      [name]: value,
     }));
   };
 
   return (
     <div className="UpdatePostError">
-      <h1>Update Post</h1>
+      <h1>Update Post with Error callback</h1>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
@@ -76,6 +76,10 @@ function UpdatePostError() {
 
   function handleError(err) {
     console.error(err);
+    const message = Object.assign(err, {
+      title: "API Error!",
+    });
+    alert(JSON.stringify(message));
   }
 }
 
