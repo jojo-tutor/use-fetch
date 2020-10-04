@@ -4,6 +4,7 @@ import GetLazyPosts from "./examples/GetLazyPosts";
 import UpdatePost from "./examples/UpdatePost";
 import UpdatePostSuccess from "./examples/UpdatePostSuccess";
 import UpdatePostError from "./examples/UpdatePostError";
+import UpdatePostDynamicUrl from "./examples/UpdatePostDynamicUrl";
 
 function App() {
   return (
@@ -12,9 +13,9 @@ function App() {
       <GetPosts />
       <GetLazyPosts />
       <UpdatePost />
-      <UpdatePostError />
       <UpdatePostSuccess />
       <UpdatePostError />
+      <UpdatePostDynamicUrl />
     </div>
   );
 }
