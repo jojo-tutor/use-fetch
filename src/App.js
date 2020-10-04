@@ -2,7 +2,7 @@ import React from "react";
 import GetPosts from "./examples/GetPosts";
 import GetLazyPosts from "./examples/GetLazyPosts";
 import UpdatePost from "./examples/UpdatePost";
-import UpdatePostSuccess from './examples/UpdatePostSuccess'
+import UpdatePostSuccess from "./examples/UpdatePostSuccess";
 import UpdatePostError from "./examples/UpdatePostError";
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
       <GetPosts />
       <GetLazyPosts />
       <UpdatePost />
+      <UpdatePostError />
       <UpdatePostSuccess />
       <UpdatePostError />
     </div>
